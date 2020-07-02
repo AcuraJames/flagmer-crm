@@ -8,16 +8,29 @@
     <div class="header__controls">
       <div class="control-icon"><img src="@/assets/icons/question.svg" /></div>
       <div class="control-icon"><img src="@/assets/icons/dots.svg" /></div>
-      <div class="control-button" @click="$emit('showModal')">
-        <img src="@/assets/icons/plus.svg" />
-        <span>Создать заявку</span>
+      <div class="control-button" @click="showModal">
+        <img :class="{ close: active }" src="@/assets/icons/plus.svg" />
+        <span>{{ active ? 'Закрыть форму' : 'Создать заявку' }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'Header',
+  data() {
+    return {
+      active: false
+    }
+  },
+  methods: {
+    showModal() {
+      this.active = !this.active
+      this.$emit('showModal')
+    }
+  }
+}
 </script>
 
 <style lang="scss">
@@ -79,7 +92,7 @@ export default {}
     }
 
     .control-button {
-      width: 150px;
+      min-width: 150px;
       height: 100%;
       padding: 15px;
       display: flex;
@@ -87,12 +100,20 @@ export default {}
       background-color: $accent;
       box-sizing: border-box;
 
+      img {
+        transition: 0.3s;
+      }
+
+      img.close {
+        transform: rotate(45deg);
+      }
+
       &:hover {
         background-color: darken($accent, 10%);
       }
 
       @media (max-width: 480px) {
-        width: 50px;
+        min-width: 50px;
         justify-content: center;
       }
 

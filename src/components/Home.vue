@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Header @showModal="modal = true" />
+    <Header @showModal="modal = !modal" />
     <main>
       <transition name="slide">
         <Modal v-if="modal" />
